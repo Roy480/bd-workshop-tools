@@ -865,10 +865,17 @@ Best,
             
             <div class="info-box">
                 <strong>2x2 矩陣：成交可能性 × 投入成本</strong><br>
-                <strong>象限 1（觀望型）</strong>：低成本 + 低可能性 → 降頻<br>
-                <strong>象限 2（快速贏）</strong>：低成本 + 高可能性 → 加碼 ✓<br>
-                <strong>象限 3（直接放）</strong>：高成本 + 低可能性 → 結案<br>
-                <strong>象限 4（戰略型）</strong>：高成本 + 高可能性 → 評估 ROI
+                <strong>象限 1（觀望型）</strong>：低可能性 + 低成本 → 降頻維護<br>
+                <strong>象限 2（快速贏）</strong>：高可能性 + 低成本 → 全力加碼 ✓<br>
+                <strong>象限 3（直接放）</strong>：低可能性 + 高成本 → 給最後通牒<br>
+                <strong>象限 4（戰略型）</strong>：高可能性 + 高成本 → 用 3 問快篩判斷
+            </div>
+            
+            <div class="warning-box">
+                <strong>💡 判斷基準：</strong><br>
+                高/低的分界點是 <strong>3.5 分</strong><br>
+                • 可能性 4-5 = 高 ｜ 1-3 = 低<br>
+                • 成本 4-5 = 高 ｜ 1-3 = 低
             </div>
             
             <h3>評分標準</h3>
@@ -963,10 +970,60 @@ Best,
             
             <div class="success-box" style="margin-top: 20px;">
                 <strong>象限判斷邏輯：</strong><br>
-                • 可能性 4-5 + 成本 1-2 → 象限 2【快速贏】→ 加碼<br>
-                • 可能性 4-5 + 成本 4-5 → 象限 4【戰略型】→ 評估<br>
-                • 可能性 1-2 + 成本 1-2 → 象限 1【觀望】→ 降頻<br>
-                • 可能性 1-2 + 成本 4-5 → 象限 3【直接放】→ 結案
+                • 可能性 4-5 + 成本 1-3 → 🟢 象限 2【快速贏】→ 加碼<br>
+                • 可能性 4-5 + 成本 4-5 → 🔵 象限 4【戰略型】→ 用 3 問快篩<br>
+                • 可能性 1-3 + 成本 1-3 → 🟡 象限 1【觀望】→ 降頻<br>
+                • 可能性 1-3 + 成本 4-5 → 🔴 象限 3【直接放】→ 給最後通牒
+            </div>
+            
+            <h3 style="margin-top: 30px;">🔵 象限 4 專用｜3 問快篩法</h3>
+            
+            <div class="info-box">
+                <strong>如果你的客戶落在「象限 4」（高可能性 + 高成本），用這 3 個問題快速判斷：</strong>
+            </div>
+            
+            <div class="case-box">
+                <h3>問題 1：合約金額夠大嗎？</h3>
+                <div class="checkbox-group">
+                    <label><input type="checkbox"> 合約金額 > 公司平均單 × 3 倍</label>
+                    <label><input type="checkbox"> 合約金額 > 你個人半年業績目標</label>
+                </div>
+                <p style="margin-top: 10px; color: #667eea; font-weight: 500;">
+                    ✅ 任一個打勾 → <strong>全力投入</strong>（這是大單，動員 team 支援，1個月內推進到簽約）
+                </p>
+            </div>
+            
+            <div class="case-box">
+                <h3>問題 2：這是戰略客戶嗎？</h3>
+                <div class="checkbox-group">
+                    <label><input type="checkbox"> 業界標竿（簽下來可以當 case study）</label>
+                    <label><input type="checkbox"> 未來有持續合作機會（不是一次性）</label>
+                    <label><input type="checkbox"> 老闆/主管明確要求拿下這個客戶</label>
+                </div>
+                <p style="margin-top: 10px; color: #667eea; font-weight: 500;">
+                    ✅ 任一個打勾 → <strong>戰略投入</strong>（長期價值高，但設時間上限：最多投入 3 週，沒進展就暫停）
+                </p>
+            </div>
+            
+            <div class="case-box">
+                <h3>問題 3：有人可以幫你分攤成本嗎？</h3>
+                <div class="checkbox-group">
+                    <label><input type="checkbox"> FAE/PM 願意投入（不需要你一直催）</label>
+                    <label><input type="checkbox"> 有現成的方案/模板可以用（不用從零開始）</label>
+                    <label><input type="checkbox"> 客戶的決策流程清楚（不會拖很久）</label>
+                </div>
+                <p style="margin-top: 10px; color: #667eea; font-weight: 500;">
+                    ✅ 有 2 個以上打勾 → <strong>可以做</strong>（成本可控，但設時間上限：最多 2-3 週）<br>
+                    ❌ 只有 1 個或沒有 → <strong>降低優先級</strong>（改用標準方案，不客製化。客戶不接受就放棄）
+                </p>
+            </div>
+            
+            <div class="warning-box" style="margin-top: 20px;">
+                <strong>💡 快速判斷流程：</strong><br>
+                1. 先看問題 1（大單？）→ 有勾就全力投入<br>
+                2. 問題 1 沒勾 → 看問題 2（戰略客戶？）→ 有勾就戰略投入<br>
+                3. 問題 1、2 都沒勾 → 看問題 3（有人幫忙？）→ 有 2 個勾就可以做<br>
+                4. 三個問題都沒達標 → 改用標準方案或放棄
             </div>
             
             <button class="btn" onclick="saveData('toolD')">💾 儲存工具表 D</button>
@@ -1120,22 +1177,41 @@ Best,<br>[你的名字]`
             let quadrant = '';
             let strategy = '';
             
-            // 判斷象限
-            if (prob >= 4 && cost <= 2) {
-                quadrant = '象限 2｜快速贏';
-                strategy = '加碼 ✓';
+            // 判斷象限（以 3.5 為分界）
+            if (prob >= 4 && cost <= 3) {
+                quadrant = '🟢 象限 2｜快速贏';
+                if (cost === 3) {
+                    strategy = '加碼（控制成本：每週<4h，用標準方案）';
+                } else {
+                    strategy = '全力加碼（每週3-5h，2週內推進）';
+                }
             } else if (prob >= 4 && cost >= 4) {
-                quadrant = '象限 4｜戰略型';
-                strategy = '評估 ROI';
-            } else if (prob <= 2 && cost <= 2) {
-                quadrant = '象限 1｜觀望';
-                strategy = '降頻';
-            } else if (prob <= 2 && cost >= 4) {
-                quadrant = '象限 3｜直接放';
-                strategy = '結案 ✗';
+                quadrant = '🔵 象限 4｜戰略型';
+                strategy = '用 3 問快篩判斷（見下方說明）';
+            } else if (prob <= 3 && cost <= 3) {
+                quadrant = '🟡 象限 1｜觀望';
+                if (prob === 3 && cost <= 2) {
+                    strategy = '輕量測試（每2-3週發1封價值信，連續3次沒回→降頻）';
+                } else if (prob === 3 && cost === 3) {
+                    strategy = '觀察2週（發1封確認優先級的信，沒回→降頻）';
+                } else {
+                    strategy = '降頻維護（每月1次產業動態分享，6個月沒互動→放棄）';
+                }
+            } else if (prob <= 3 && cost >= 4) {
+                quadrant = '🔴 象限 3｜直接放';
+                strategy = '給最後通牒（本週內回覆確認下一步，沒回→正式結案）';
             } else {
-                quadrant = '中間區域';
-                strategy = '視情況';
+                // 邊界案例
+                if (prob === 3 && cost === 4) {
+                    quadrant = '🔴 象限 3｜直接放';
+                    strategy = '給最後通牒（CP值太低，本週內確認否則放棄）';
+                } else if (prob === 4 && cost === 3) {
+                    quadrant = '🟢 象限 2｜快速贏';
+                    strategy = '加碼（控制成本：每週<4h，用標準方案）';
+                } else {
+                    quadrant = '🟡 象限 1｜觀望';
+                    strategy = '降頻維護';
+                }
             }
             
             document.getElementById(`d_client${clientNum}_quadrant`).textContent = quadrant;
