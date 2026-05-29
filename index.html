@@ -332,6 +332,117 @@
             }
         }
         
+        /* Diagnose Button */
+        .btn-diagnose {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-diagnose:hover {
+            opacity: 0.92;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(102, 126, 234, 0.45);
+        }
+
+        /* Diagnosis Result Block */
+        .diagnosis-result {
+            display: none;
+            border-radius: 8px;
+            padding: 22px 22px 22px 22px;
+            margin-top: 18px;
+            position: relative;
+            animation: fadeInUp 0.35s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .diagnosis-result.situation-contact {
+            background: #fdecea;
+            border-left: 5px solid #e53935;
+        }
+
+        .diagnosis-result.situation-trust {
+            background: #fff8e1;
+            border-left: 5px solid #fb8c00;
+        }
+
+        .diagnosis-result.situation-progress {
+            background: #f3e5f5;
+            border-left: 5px solid #8e24aa;
+        }
+
+        .diagnosis-result.situation-spread {
+            background: #e3f2fd;
+            border-left: 5px solid #1e88e5;
+        }
+
+        .diagnosis-result h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            margin-right: 90px; /* avoid overlap with copy btn */
+        }
+
+        .diagnosis-result.situation-contact h3 { color: #c62828; }
+        .diagnosis-result.situation-trust    h3 { color: #e65100; }
+        .diagnosis-result.situation-progress h3 { color: #6a1b9a; }
+        .diagnosis-result.situation-spread   h3 { color: #1565c0; }
+
+        .diagnosis-result p {
+            color: #444;
+            line-height: 1.75;
+            margin-bottom: 14px;
+            font-size: 15px;
+        }
+
+        .diagnosis-next {
+            background: rgba(255, 255, 255, 0.65);
+            border-radius: 6px;
+            padding: 10px 15px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .diagnosis-next strong {
+            color: #555;
+        }
+
+        .diagnosis-copy-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0,0,0,0.12);
+            border-radius: 5px;
+            padding: 6px 13px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: inherit;
+        }
+
+        .diagnosis-copy-btn:hover {
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .diagnosis-copy-btn.copied {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+
         /* Print Styles */
         @media print {
             body {
@@ -645,7 +756,16 @@
                 推進的定義：找到對的人（DM）、問到對的問題（痛點）、確認對的下一步
             </div>
             
-            <button class="btn" onclick="saveData('toolA')">💾 儲存工具表 A</button>
+            <button class="btn-diagnose" onclick="diagnoseFunnel()">🔍 立即診斷</button>
+
+            <div id="diagnosisResult" class="diagnosis-result">
+                <button class="diagnosis-copy-btn" id="diagnosisCopyBtn" onclick="copyDiagnosis()">複製結果</button>
+                <h3 id="diagnosisTitle"></h3>
+                <p id="diagnosisContent"></p>
+                <div class="diagnosis-next">
+                    <strong>→ 下一步建議：</strong><span id="diagnosisNext"></span>
+                </div>
+            </div>
         </div>
         
         <!-- Tool B: 陌開訊息起草框架 -->
@@ -1221,6 +1341,136 @@ Best,<br>[你的名字]`
         // Print All
         function printAll() {
             window.print();
+        }
+
+        // ── 工具表 A 漏斗診斷 ──────────────────────────────────────────────────
+
+        function diagnoseFunnel() {
+            // Count checked stages across all 3 cases
+            const counts = { contact: 0, trust: 0, progress: 0, close: 0 };
+
+            for (let i = 1; i <= 3; i++) {
+                const checked = document.querySelectorAll(`input[name="a_case${i}_stage"]:checked`);
+                checked.forEach(function(cb) {
+                    if (Object.prototype.hasOwnProperty.call(counts, cb.value)) {
+                        counts[cb.value]++;
+                    }
+                });
+            }
+
+            const total = counts.contact + counts.trust + counts.progress + counts.close;
+
+            if (total === 0) {
+                alert('請至少填寫一個案子的階段');
+                return;
+            }
+
+            // Find dominant stage
+            const max = Math.max(counts.contact, counts.trust, counts.progress, counts.close);
+            const tops = Object.keys(counts).filter(function(k) { return counts[k] === max; });
+
+            // If tied → spread; if 成交 alone dominates → spread
+            let situation;
+            if (tops.length === 1 && tops[0] !== 'close') {
+                situation = tops[0];
+            } else {
+                situation = 'spread';
+            }
+
+            const SITUATIONS = {
+                contact: {
+                    title: '你的問題在陌開階段',
+                    content: '陌開回應率太低、沒做功課、亂槍打鳥。在開口之前，先花時間研究對方。客戶的 LinkedIn、最近的 press release、產品線動向，都是讓你一開口就切題的彈藥。當對方覺得你懂他的處境，他才願意繼續聊。',
+                    next: '工具表 B — 陌開訊息起草框架',
+                    cls: 'situation-contact'
+                },
+                trust: {
+                    title: '你的問題在建立信任',
+                    content: '客戶有興趣但沒有急迫性，一直說「我考慮一下」。每次互動都要讓對方有一個小收穫，不是每次都帶大 deck，而是每次結束後讓對方覺得「這個人跟他見面是有料的」。',
+                    next: '第3節推進機制',
+                    cls: 'situation-trust'
+                },
+                progress: {
+                    title: '你的問題在推進階段',
+                    content: '提案後沒消息、客戶說「要內部討論」。三個關鍵問題：Decision Maker 有沒有接觸到？對方這個季度有沒有決策壓力？有沒有還沒處理的內部反對者？',
+                    next: '工具表 C — 推進計畫表',
+                    cls: 'situation-progress'
+                },
+                spread: {
+                    title: '你的問題在資源分散',
+                    content: '每個案子都推得很慢。把過去三個月聯繫過的客戶列出來，問自己：大部分時間是否花在最容易聯絡的人上，而不是最有機會成交的人上？',
+                    next: '工具表 D — 客戶優先度矩陣',
+                    cls: 'situation-spread'
+                }
+            };
+
+            var s = SITUATIONS[situation];
+            var resultDiv = document.getElementById('diagnosisResult');
+
+            // Reset classes and set new ones
+            resultDiv.className = 'diagnosis-result ' + s.cls;
+            resultDiv.style.display = 'block';
+            document.getElementById('diagnosisTitle').textContent = s.title;
+            document.getElementById('diagnosisContent').textContent = s.content;
+            document.getElementById('diagnosisNext').textContent = s.next;
+
+            // Reset copy button text
+            var copyBtn = document.getElementById('diagnosisCopyBtn');
+            copyBtn.textContent = '複製結果';
+            copyBtn.classList.remove('copied');
+
+            // Smooth scroll to result
+            setTimeout(function() {
+                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 80);
+        }
+
+        function copyDiagnosis() {
+            var title   = document.getElementById('diagnosisTitle').textContent;
+            var content = document.getElementById('diagnosisContent').textContent;
+            var next    = document.getElementById('diagnosisNext').textContent;
+
+            if (!title) return;
+
+            var text = '【個人漏斗診斷結果】\n\n' + title + '\n\n' + content + '\n\n→ 下一步建議：' + next;
+
+            var copyBtn = document.getElementById('diagnosisCopyBtn');
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(function() {
+                    copyBtn.textContent = '已複製！';
+                    copyBtn.classList.add('copied');
+                    setTimeout(function() {
+                        copyBtn.textContent = '複製結果';
+                        copyBtn.classList.remove('copied');
+                    }, 2000);
+                }).catch(function() {
+                    fallbackCopy(text, copyBtn);
+                });
+            } else {
+                fallbackCopy(text, copyBtn);
+            }
+        }
+
+        function fallbackCopy(text, btn) {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+                document.execCommand('copy');
+                btn.textContent = '已複製！';
+                btn.classList.add('copied');
+                setTimeout(function() {
+                    btn.textContent = '複製結果';
+                    btn.classList.remove('copied');
+                }, 2000);
+            } catch(e) {
+                alert('請手動複製：\n\n' + text);
+            }
+            document.body.removeChild(ta);
         }
         
         // Auto-save on input change
