@@ -862,7 +862,6 @@ Best,
                 ☐ 客戶有沒有一個「明確且簡單」的下一步？
             </div>
             
-            <button class="btn" onclick="saveData('toolB')">💾 儲存工具表 B</button>
         </div>
         
         <!-- Tool C: 推進計畫表 -->
@@ -975,7 +974,6 @@ Best,
                 <textarea id="c_my_email" style="min-height: 200px;" placeholder="寫下你的推進信..."></textarea>
             </div>
             
-            <button class="btn" onclick="saveData('toolC')">💾 儲存工具表 C</button>
         </div>
         
         <!-- Tool D: 客戶優先度矩陣 -->
@@ -1146,7 +1144,6 @@ Best,
                 4. 三個問題都沒達標 → 改用標準方案或放棄
             </div>
             
-            <button class="btn" onclick="saveData('toolD')">💾 儲存工具表 D</button>
         </div>
         
     </div>
@@ -1172,27 +1169,6 @@ Best,
             
             // Load saved data for this tool
             loadData(toolId);
-        }
-        
-        // Save Data to LocalStorage
-        function saveData(toolId) {
-            const inputs = document.querySelectorAll(`#${toolId} input, #${toolId} select, #${toolId} textarea`);
-            const data = {};
-            
-            inputs.forEach(input => {
-                if (input.type === 'checkbox') {
-                    data[input.id] = input.checked;
-                } else if (input.type === 'radio') {
-                    if (input.checked) {
-                        data[input.name] = input.value;
-                    }
-                } else {
-                    data[input.id] = input.value;
-                }
-            });
-            
-            localStorage.setItem(toolId, JSON.stringify(data));
-            alert('✅ 已儲存！資料會保存在您的瀏覽器中。');
         }
         
         // Load Data from LocalStorage
