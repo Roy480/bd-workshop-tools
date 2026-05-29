@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BD 成交方法論 — 工作坊工具表</title>
+    <title>BD 成交加速器 — 工作坊工具表</title>
     <style>
         * {
             margin: 0;
@@ -465,7 +465,7 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <h1>BD 成交方法論 — 工作坊工具表</h1>
+            <h1>BD 成交加速器 — 工作坊工具表</h1>
             <p>4 個實戰工具表，幫你從「很忙沒結果」到「系統化成交」</p>
         </div>
         
@@ -476,7 +476,6 @@
             <button class="nav-btn" onclick="showTool('toolB')">工具表 B｜陌開訊息</button>
             <button class="nav-btn" onclick="showTool('toolC')">工具表 C｜推進計畫</button>
             <button class="nav-btn" onclick="showTool('toolD')">工具表 D｜優先度矩陣</button>
-            <button class="nav-btn" onclick="printAll()">📥 列印全部</button>
         </div>
         
         <!-- Intro Section -->
@@ -1314,11 +1313,6 @@ Best,<br>[你的名字]`
             document.getElementById(`d_client${clientNum}_strategy`).textContent = strategy;
         }
         
-        // Print All
-        function printAll() {
-            window.print();
-        }
-
         // ── 工具表 A 漏斗診斷 ──────────────────────────────────────────────────
 
         function diagnoseFunnel() {
